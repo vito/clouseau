@@ -3,7 +3,7 @@ require "clouseau/detectors/java"
 module Clouseau
   class Play < Java
     zip "*.zip" do |file|
-      file =~ /lib\/play\..*\.jar/
+      file.name =~ /lib\/play\..*\.jar/
     end
 
     framework "play"
