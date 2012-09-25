@@ -13,7 +13,7 @@ task :build do
 end
 
 task :install => :build do
-  sh "gem install --local clouseau#{Clouseau::VERSION}"
+  sh "gem install --local clouseau-#{Clouseau::VERSION}"
 end
 
 task :uninstall do
@@ -23,7 +23,7 @@ end
 task :reinstall => [:uninstall, :install]
 
 task :release => :build do
-  sh "gem push clouseau#{Clouseau::VERSION}.gem"
+  sh "gem push clouseau-#{Clouseau::VERSION}.gem"
 end
 
 namespace "bundler" do
