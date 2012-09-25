@@ -2,7 +2,7 @@ module Clouseau
   class DotNet < Detector
     file "web.config"
 
-    framework "dotNet"
+    framework :dotnet
     memory 128
   end
 end

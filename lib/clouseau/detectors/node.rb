@@ -5,8 +5,7 @@ module Clouseau
     file "index.js"
     file "main.js"
 
-    framework "node"
-    runtime "node*"
+    language :node
     memory 64
   end
 end

@@ -6,6 +6,6 @@ module Clouseau
       file.name =~ /WEB-INF\/lib\/grails-web.*\.jar/
     end
 
-    framework "grails"
+    framework :grails
   end
 end

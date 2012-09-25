@@ -1,14 +1,43 @@
 require "zip/zipfilesystem"
 
 module Clouseau
+  # array of registered detectors, in the order they'll be tried
+  #
+  # see Detector.inherited
   def self.detectors
     @detectors ||= []
   end
 
   class Detector
     class << self
+      attr_accessor :framework_name, :language_name, :memory_suggestion
+
+      # each detection technique; an array of blocks which when called with
+      # a path yield true or false
+      def detection
+        @detection ||= []
+      end
+
+      # name of the detected framework
+      def framework_name
+        @framework_name || parent(:framework_name)
+      end
+
+      # name of the detected language
+      def language_name
+        @language_name || parent(:language_name)
+      end
+
+      # suggested minimum memory allocation for an application of this type
+      def memory_suggestion
+        @memory_suggestion || parent(:memory_suggestion)
+      end
+
+      private
+
+      # register the detector, ensuring it's prioritized over its superclass
       def inherited(cls)
-        idx = 
+        idx =
           Clouseau.detectors.index { |d|
             (cls <=> d) == -1
           }
@@ -18,20 +47,17 @@ module Clouseau
 
       # set detected framework name
       def framework(name)
-        suggestions[:framework] = name
+        self.framework_name = name
       end
 
-      # set valid/suggested runtime names
-      #
-      # names can be globs (i.e. node*)
-      def runtime(*names)
-        suggestions[:runtimes] = names
+      # set detected language
+      def language(name)
+        self.language_name = name
       end
-      alias :runtimes :runtime
 
       # set suggested memory
       def memory(size)
-        suggestions[:memory] = size
+        self.memory_suggestion = size
       end
 
       # check for given filenames
@@ -66,6 +92,10 @@ module Clouseau
         }
       end
 
+      # check for an archive (i.e. .war, .zip, .jar)
+      #
+      # if given a block, it is called with each entry in the archive, and if
+      # it ever returns true, it is a match
       def zip(glob, &check)
         detection << proc { |path|
           archives =
@@ -90,17 +120,14 @@ module Clouseau
         }
       end
 
-      def detection
-        @detection ||= []
-      end
-
-      private
-
-      def suggestions
-        @suggestions ||= {}
+      def parent(meth)
+        if superclass.respond_to? meth
+          superclass.send(meth)
+        end
       end
     end
 
+    # run through the detection methods and return `true' if one matches
     def detect(path)
       self.class.detection.any? do |d|
         d.call(path)

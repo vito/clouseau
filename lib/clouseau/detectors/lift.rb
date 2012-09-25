@@ -6,6 +6,6 @@ module Clouseau
       file.name =~ /WEB-INF\/lib\/lift-webkit.*\.jar/
     end
 
-    framework "lift"
+    framework :lift
   end
 end

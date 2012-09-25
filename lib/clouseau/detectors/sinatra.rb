@@ -6,6 +6,6 @@ module Clouseau
       File.read(file) =~ /^\s*require[\s\(]*['"]sinatra(\/base)?['"]/
     end
 
-    memory 128
+    framework :sinatra
   end
 end

@@ -6,7 +6,7 @@ module Clouseau
       file.name =~ /lib\/play\..*\.jar/
     end
 
-    framework "play"
+    framework :play
     memory 256
   end
 end

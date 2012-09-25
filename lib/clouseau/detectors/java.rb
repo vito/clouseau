@@ -3,8 +3,7 @@ module Clouseau
     glob "*.war"
     file "WEB-INF/web.xml"
 
-    framework "java_web"
-    runtime "java*"
+    language :java
     memory 512
   end
 end

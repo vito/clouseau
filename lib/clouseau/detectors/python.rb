@@ -2,8 +2,7 @@ module Clouseau
   class Python < Detector
     file "wsgi.py"
 
-    runtime "python*"
-    framework "wsgi"
+    language :python
     memory 64
   end
 end

@@ -11,6 +11,6 @@ module Clouseau
       end
     end
 
-    framework "spring"
+    framework :spring
   end
 end

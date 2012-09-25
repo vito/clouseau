@@ -4,7 +4,7 @@ module Clouseau
   class Django < Python
     file "manage.py", "settings.py"
 
-    framework "django"
+    framework :django
     memory 128
   end
 end
