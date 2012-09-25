@@ -8,5 +8,11 @@ module Clouseau
         d.new.detect(path)
       end
     end
+
+    def matches(path)
+      detectors.select do |d|
+        d.new.detect(path)
+      end
+    end
   end
 end
