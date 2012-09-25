@@ -60,9 +60,7 @@ module Clouseau
             files = Dir.glob("#{path}/#{glob}")
 
             unless files.empty?
-              !check || files.any? { |f|
-                check.call(File.read(f))
-              }
+              !check || files.any? { |f| check.call(f) }
             end
           end
         }
